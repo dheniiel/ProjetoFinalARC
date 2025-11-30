@@ -44,3 +44,11 @@ Para configurar o DNS resolver, é necessário ir na barra de navegação e proc
 #### 5.4 - Host: servidor (Nome apenas representativo)
 #### 5.5 - Domínio lan (Domínio criado no servidor pfSense)
 #### 5.6 - Endereço IP: 172.16.0.125 (Endereço IP amarrado a máquina que desejo atribuir esse host)
+
+# Apache 
+Nesta rede, o servidor Apache foi criado e testado de modo simples e pragmático. Iniciando-se com a instalação do próprio servidor, na máquina virtual que é servidor (172.16.0.125). Após a instalação verificar se o serviço está rodando e testá-lo colocando o IP  172.16.0.125 e aparecendo a página padrão do servidor Apache.
+
+### Em síntese: 
+#### 1 - Sudo apt install apache2 -y (Instalar o apache)
+#### 2 - Systemctl status apache2 (Consultar se está rodando, se estiver terá algo parecido com "Active: active (running)")
+#### 3 - Para testar é só colocar o IP do servidor no navegador (172.16.0.125), na máquina servidor ou cliente, aparecendo assim a página HTML padrão do Apache.
