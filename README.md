@@ -16,7 +16,7 @@ Por fim, a máquina virtual 3 serve como cliente para o serviços fornecidos pel
 
 # DHCP
 Para configurar o servidor DHCP, foi necessário acessar a interface visual por meio do IP, recebido via DHCP na interface WAN, colocando-o no navegador. Ao acessar o pfSense no navegador, é necessário ir na aba Serviços -> Servidor DHCP. Após, é necessário marcar a opção de "Habilitar servidor DHCP na interface LAN". Por padrão, já vem pré-estabelecido com a mesma rede do IP configurado manualmente na LAN durante a configuração do pfSense, sendo neste caso a rede 172.16.0.0/24 com o range de sub-rede 172.16.0.1 - 172.16.0.254. Neste projeto, foi usado o range começando no IP 172.16.0.130 e acabando no IP 172.16.0.150. Para a configuração do DNS em que DHCP vai ofertar, foi colocado o IP do servidor pfSense na LAN (172.16.0.13), pois o servidor DNS também será configurado posteriormente. Na opção "Gateway" também é atribuído o IP do servidor pfSense, o dominío atribuído é o "lan". Em "Default Lease Time" é atríbuido 7200s (2 horas) como tempo de concessão padrão, caso o cliente não especificar, e em "Maximum Lease Time" é atribuído 86400s (24h) sendo o tempo máximo que o cliente pode ficar com o IP sem renová-lo. Por fim, para amarrar um IP ao endereço MAC dá máquina que vai ser servidor, é necessário a opção "DHCP Static Mappings" e procurar pelo botão "Add DHCP Static Mapping". Ao clicar adicionar no endereço MAC dá máquina virtual do servidor (Apache/FTP/NFS), sendo neste caso 08:00:27:17:ee:9b, atribuir um endereço IP fora do range escolhido, neste caso sendo 172.16.0.125 e adicionando nome ao host, nesse caso sendo "servidor". 
-### Em síntese
+### Em síntese:
 #### 1 - Habilitar servidor DHCP na interface LAN
 #### 2 - Subrede: 172.16.0.0/24, Subrede range: 172.16.0.1 - 172.16.0.254 (Vem pré-estabelecido de acordo com o IP da LAN, atribuído manulmente no pfSense)
 #### 3 - Address Pool Range: 172.16.0.130 - 172.16.0.150 (Usado neste exemplo de rede)
@@ -29,3 +29,18 @@ Para configurar o servidor DHCP, foi necessário acessar a interface visual por 
 #### 9.1 - Endereço MAC: 08:00:27:17:ee:9b (Endereço MAC da máquina que vai ser o servidor)
 #### 9.2 - Endereço IP: 172.16.0.125 (IP que vai ser amarrado ao servidor)
 #### 9.3 - Nome de host: servidor (Nome atribuido ao servidor)
+
+# DNS 
+Para configurar o DNS resolver, é necessário ir na barra de navegação e procurar por Serviços -> DNS Resolver. Ao acessar esta opção é necessário marcar a opção "Ativar o resolvedor de DNS" e a porta de escuta permanece a padrão 53. Em "Interface de Rede" deixar a opção "Todos", estabelecendo que o DNS vai aceitar e responder consultas de todas a interfaces. Em "Interfaces de Rede de Saída" configurar como "WAN", definindo que a WAN vai ser a interface que vai enviar as consultas a DNS externos. Por fim, na opção "Sobrescrever Host" clicando em "Adicionar", foi configurado o host "clinte" como o domínio "lan" ao endereço IP 172.16.0.132 e o host "servidor" com domínio "lan" ao endereço IP 172.16.0.125.
+### Em síntese: 
+#### 1 - Ativar o resolvedor de DNS
+#### 2 - Porta de escuta: 53 (Porta padrão do DNS)
+#### 3 - Interface de rede: Todos (O servidor DNS vai aceitar e responder consultar de todas as interfaces)
+#### 4 - Interface de rede de saída: WAN (A WAN vai ser a interface responsável por enviar consultas a DNS externos)
+#### 5 - Sobrescrever Host
+#### 5.1 - Host: cliente (Nome apenas representativo)
+#### 5.2 - Domínio lan (Domínio criado no servidor pfSense)
+#### 5.3 - Endereço IP: 172.16.0.132 (Endereço IP da máquina que desejo atribuir esse host)
+#### 5.4 - Host: servidor (Nome apenas representativo)
+#### 5.5 - Domínio lan (Domínio criado no servidor pfSense)
+#### 5.6 - Endereço IP: 172.16.0.125 (Endereço IP amarrado a máquina que desejo atribuir esse host)
