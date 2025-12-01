@@ -48,33 +48,33 @@ Para configurar o DNS resolver, é necessário ir na barra de navegação e proc
 # Apache 
 Nesta rede, o servidor Apache foi criado e testado de modo simples e pragmático. Iniciando-se com a instalação do próprio servidor, na máquina virtual que é servidor (172.16.0.125). Após a instalação verificar se o serviço está rodando e testá-lo colocando o IP  172.16.0.125 e aparecendo a página padrão do servidor Apache.
 
-### Em síntese: 
+### Passo a passo: 
 #### 1 - sudo apt install apache2 -y (Instalar o apache)
 #### 2 - systemctl status apache2 (Consultar se está rodando, se estiver terá algo parecido com "Active: active (running)")
 #### 3 - Para testar é só colocar o IP do servidor no navegador (172.16.0.125), na máquina servidor ou cliente, aparecendo assim a página HTML padrão do Apache.
 
 # NFS
+Para configurar o servidor NFS, foi necessário instalar o pacote nfs-kernel-server na máquina Servidor, configurando-o corretamente e aplicando as configurações. Na máquina cliente, é necessário baixar o pacote nfs-common para utilizar o serviço do NFS e após, montar o diretério compartilhado em um diretório local. 
 
-
-### Em síntese: 
+### Passo a passo: 
 
 ## Na máquina servidor
-### 1 - sudo apt install nfs-kernel-server (Comando para instalar o servidor NFS)
-### 2 - sudo mkdir -p /servidor/pastacomp (Comando para criar o diretório a ser compartilhado)
-### 3 - sudo chmod 777 /servidor/pastacomp (Comando para atribuir todas permissões no diretório)
-### 4 - sudo nano /etc/exports (Comando para acessar e editar o arquivo "exports", responsável pela configuração do servidor NFS)
-### 4.1 - /servidor/pastacomp 172.16.0.0/24(rw,sync,no_root_squash): /servidor/pastacomp = diretório a ser compartilhado, 172.16.0.0/24: ficará disponível para toda a rede local, rw: permissão de leitura e escrita, sync: escrita síncrona, no_root_squash: libera privilégios para o root. 
-### 5 - sudo exportfs -ra (Comando para aplicar as configurações estabelecidas no arquivo /etc/exports)
-### 6 - sudo exportfs -v (Comando para verificar se o diretório realmente foi compartilhado)
-### 7 - systemctl status nfs-kernel-server (Comando para ver se o serviço está realmente ativo, se estiver aparecerá com "Active: active (running)")
+#### 1 - sudo apt install nfs-kernel-server (Comando para instalar o servidor NFS)
+#### 2 - sudo mkdir -p /servidor/pastacomp (Comando para criar o diretório a ser compartilhado)
+#### 3 - sudo chmod 777 /servidor/pastacomp (Comando para atribuir todas permissões no diretório)
+#### 4 - sudo nano /etc/exports (Comando para acessar e editar o arquivo "exports", responsável pela configuração do servidor NFS)
+#### 4.1 - /servidor/pastacomp 172.16.0.0/24(rw,sync,no_root_squash): /servidor/pastacomp = diretório a ser compartilhado, 172.16.0.0/24: ficará disponível para toda a rede local, rw: permissão de leitura e escrita, sync: escrita síncrona, no_root_squash: libera privilégios para o root. 
+#### 5 - sudo exportfs -ra (Comando para aplicar as configurações estabelecidas no arquivo /etc/exports)
+#### 6 - sudo exportfs -v (Comando para verificar se o diretório realmente foi compartilhado)
+#### 7 - systemctl status nfs-kernel-server (Comando para ver se o serviço está realmente ativo, se estiver aparecerá com "Active: active (running)")
 
 ## Na máquina cliente
-### 1 - sudo apt install nfs-common (Comando para instalar o NFS para os clientes que vão utilizar o serviço)
-### 2 - sudo mkdir -p /cliente/pastacomp (Comando para criar o diretório que será montado o compartilhamento)
-### 3 - sudo mount 172.16.0.125:/servidor/pastacomp /cliente/pastacomp: 172.16.0.125 = Endereço IP do servidor NFS, /servidor/pastacomp = diretório do servidor que vai ser compartilhado, /cliente/pastacomp = direótiro do cliente em que será montada a pasta compartilhada.
-### 4 - sudo nano /etc/fstab (Comando para configurar o arquivo /etc/fstab garantindo que a montagem sempre seja feita automaticamente)
-### 4.1 - 172.16.0.125:/servidor/pastacomp   /cliente/pastacomp   nfs   defaults,noatime,_netdev   0   0: 172.16.0.125:/servidor/pastacomp = diretório do servidor que vai ser compartilhado, /cliente/pastacomp = diretório de montagem da máquina cliente, nfs = comando para utilizar o sistema de arquivos nfs, defaults = opção padrão de configuração, noatime = melhora o desempenho não escrevendo no disco, _netdev = monta o diretório apenas se os serviços de rede estiverem funcionando, 0 0 = comando para não ser realizado o dump nem ser verificado pelo fsck. 
-### 5 - mount -a (Comando para ser montado tudo, aplicando as configurações no cliente).
+#### 1 - sudo apt install nfs-common (Comando para instalar o NFS para os clientes que vão utilizar o serviço)
+#### 2 - sudo mkdir -p /cliente/pastacomp (Comando para criar o diretório que será montado o compartilhamento)
+#### 3 - sudo mount 172.16.0.125:/servidor/pastacomp /cliente/pastacomp: 172.16.0.125 = Endereço IP do servidor NFS, /servidor/pastacomp = diretório do servidor que vai ser compartilhado, /cliente/pastacomp = direótiro do cliente em que será montada a pasta compartilhada.
+#### 4 - sudo nano /etc/fstab (Comando para configurar o arquivo /etc/fstab garantindo que a montagem sempre seja feita automaticamente)
+#### 4.1 - 172.16.0.125:/servidor/pastacomp   /cliente/pastacomp   nfs   defaults,noatime,_netdev   0   0: 172.16.0.125:/servidor/pastacomp = diretório do servidor que vai ser compartilhado, /cliente/pastacomp = diretório de montagem da máquina cliente, nfs = comando para utilizar o sistema de arquivos nfs, defaults = opção padrão de configuração, noatime = melhora o desempenho não escrevendo no disco, _netdev = monta o diretório apenas se os serviços de rede estiverem funcionando, 0 0 = comando para não ser realizado o dump nem ser verificado pelo fsck. 
+#### 5 - mount -a (Comando para ser montado tudo, aplicando as configurações no cliente).
 
 ## Teste
 Para testar o servidor NFS basta procurar no gerecidor de arquivos o diretório compartilhado e/ou montado, criando um arquivo em algum dos diretórios e verificando no outro. Por exemplo: procurar pela pasta /servidor/pastacomp no gerenciador de arquivos do servidor e criar um arquivo txt, depois acessar a máquina cliente e verificar se na pasta /cliente/pastacomp está o arquivo txt criado. 
