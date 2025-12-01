@@ -31,7 +31,7 @@ Para configurar o servidor DHCP, foi necessário acessar a interface visual por 
 #### 9.3 - Nome de host: servidor (Nome atribuido ao servidor)
 
 # DNS 
-Para configurar o DNS resolver, é necessário ir na barra de navegação e procurar por Serviços -> DNS Resolver. Ao acessar esta opção é necessário marcar a opção "Ativar o resolvedor de DNS" e a porta de escuta permanece a padrão 53. Em "Interface de Rede" deixar a opção "Todos", estabelecendo que o DNS vai aceitar e responder consultas de todas a interfaces. Em "Interfaces de Rede de Saída" configurar como "WAN", definindo que a WAN vai ser a interface que vai enviar as consultas a DNS externos. Por fim, na opção "Sobrescrever Host" clicando em "Adicionar", foi configurado o host "clinte" como o domínio "lan" ao endereço IP 172.16.0.132 e o host "servidor" com domínio "lan" ao endereço IP 172.16.0.125.
+Para configurar o DNS resolver, é necessário ir na barra de navegação e procurar por Serviços -> DNS Resolver. Ao acessar esta opção é necessário marcar a opção "Ativar o resolvedor de DNS" e a porta de escuta permanece a padrão 53. Em "Interface de Rede" deixar a opção "Todos", estabelecendo que o DNS vai aceitar e responder consultas de todas a interfaces. Em "Interfaces de Rede de Saída" configurar como "WAN", definindo que a WAN vai ser a interface que vai enviar as consultas a DNS externos. Por fim, na opção "Sobrescrever Host" clicando em "Adicionar", foi configurado o host "cliente" como o domínio "lan" ao endereço IP 172.16.0.132 e o host "servidor" com domínio "lan" ao endereço IP 172.16.0.125.
 ### Em síntese: 
 #### 1 - Ativar o resolvedor de DNS
 #### 2 - Porta de escuta: 53 (Porta padrão do DNS)
