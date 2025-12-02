@@ -15,7 +15,8 @@ A máquina virtual 2 usa o sistema operacinal do Linux Mint para ser servidor Ap
 Por fim, a máquina virtual 3 serve como cliente para o serviços fornecidos pela máquina virtual 2 (Apache/FTP/NFS). Também tendo sua placa de rede habilitada como "Rede Interna", esta máquina virtual recebe IP dinamicamente via DHCP do servidor pfSense. 
 
 # DHCP
-Para configurar o servidor DHCP, foi necessário acessar a interface visual por meio do IP, recebido via DHCP na interface WAN, colocando-o no navegador. Ao acessar o pfSense no navegador, é necessário ir na aba Serviços -> Servidor DHCP. Após, é necessário marcar a opção de "Habilitar servidor DHCP na interface LAN". Por padrão, já vem pré-estabelecido com a mesma rede do IP configurado manualmente na LAN durante a configuração do pfSense, sendo neste caso a rede 172.16.0.0/24 com o range de sub-rede 172.16.0.1 - 172.16.0.254. Neste projeto, foi usado o range começando no IP 172.16.0.130 e acabando no IP 172.16.0.150. Para a configuração do DNS em que DHCP vai ofertar, foi colocado o IP do servidor pfSense na LAN (172.16.0.13), pois o servidor DNS também será configurado posteriormente. Na opção "Gateway" também é atribuído o IP do servidor pfSense, o dominío atribuído é o "lan". Em "Default Lease Time" é atríbuido 7200s (2 horas) como tempo de concessão padrão, caso o cliente não especificar, e em "Maximum Lease Time" é atribuído 86400s (24h) sendo o tempo máximo que o cliente pode ficar com o IP sem renová-lo. Por fim, para amarrar um IP ao endereço MAC dá máquina que vai ser servidor, é necessário a opção "DHCP Static Mappings" e procurar pelo botão "Add DHCP Static Mapping". Ao clicar adicionar no endereço MAC dá máquina virtual do servidor (Apache/FTP/NFS), sendo neste caso 08:00:27:17:ee:9b, atribuir um endereço IP fora do range escolhido, neste caso sendo 172.16.0.125 e adicionando nome ao host, nesse caso sendo "servidor". 
+Para configurar o servidor DHCP, foi necessário acessar a interface visual por meio do IP, recebido via DHCP na interface WAN, colocando-o no navegador. Ao acessar o pfSense no navegador, é necessário ir na aba Serviços -> Servidor DHCP. Após, é necessário marcar a opção de "Habilitar servidor DHCP na interface LAN". Por padrão, já vem pré-estabelecido com a mesma rede do IP configurado manualmente na LAN durante a configuração do pfSense, sendo neste caso a rede 172.16.0.0/24 com o range de sub-rede 172.16.0.1 - 172.16.0.254. Neste projeto, foi usado o range começando no IP 172.16.0.130 e acabando no IP 172.16.0.150. Para a configuração do DNS em que DHCP vai ofertar, foi colocado o IP do servidor pfSense na LAN (172.16.0.13), pois o servidor DNS também será configurado posteriormente. Na opção "Gateway" também é atribuído o IP do servidor pfSense, o dominío atribuído é o "lan". Em "Default Lease Time" é atríbuido 7200s (2 horas) como tempo de concessão padrão, caso o cliente não especificar, e em "Maximum Lease Time" é atribuído 86400s (24h) sendo o tempo máximo que o cliente pode ficar com o IP sem renová-lo. Por fim, para amarrar um IP ao endereço MAC dá máquina que vai ser servidor, é necessário a opção "DHCP Static Mappings" e procurar pelo botão "Add DHCP Static Mapping". Ao clicar adicionar no endereço MAC dá máquina virtual do servidor (Apache/FTP/NFS), sendo neste caso 08:00:27:17:ee:9b, atribuir um endereço IP fora do range escolhido, neste caso sendo 172.16.0.125 e adicionando nome ao host, nesse caso sendo "servidor".
+
 ### Em síntese:
 #### 1 - Habilitar servidor DHCP na interface LAN
 #### 2 - Subrede: 172.16.0.0/24, Subrede range: 172.16.0.1 - 172.16.0.254 (Vem pré-estabelecido de acordo com o IP da LAN, atribuído manulmente no pfSense)
@@ -52,6 +53,14 @@ Nesta rede, o servidor Apache foi criado e testado de modo simples e pragmático
 #### 1 - sudo apt install apache2 -y (Instalar o apache)
 #### 2 - systemctl status apache2 (Consultar se está rodando, se estiver terá algo parecido com "Active: active (running)")
 #### 3 - Para testar é só colocar o IP do servidor no navegador (172.16.0.125), na máquina servidor ou cliente, aparecendo assim a página HTML padrão do Apache.
+
+# FTP
+
+### Passo a passo: 
+### Na máquina servidor: 
+#### sudo apt install vsftpd -y (Comando para instalar o servidor FTP)
+#### systemctl status vsftpd (Verificar se o serviço está ativo, aparecendo algo como "Active: active (running)")
+#### sudo nano /etc/vsftpd.conf (Comando para editar o arquivo /etc/vsftpd.conf, responsável pela configuração do servidor)
 
 # NFS
 Para configurar o servidor NFS, foi necessário instalar o pacote nfs-kernel-server na máquina Servidor, configurando-o corretamente e aplicando as configurações. Na máquina cliente, é necessário baixar o pacote nfs-common para utilizar o serviço do NFS e após, montar o diretério compartilhado em um diretório local. 
