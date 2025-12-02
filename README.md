@@ -119,7 +119,7 @@ Para configurar o servidor NFS, foi necessário instalar o pacote nfs-kernel-ser
 #### 4 - sudo nano /etc/fstab (Comando para configurar o arquivo /etc/fstab garantindo que a montagem sempre seja feita automaticamente)
 #### 4.1 - 172.16.0.125:/servidor/pastacomp   /cliente/pastacomp   nfs   defaults,noatime,_netdev   0   0
 172.16.0.125:/servidor/pastacomp = diretório do servidor que vai ser compartilhado; 
-/cliente/pastacomp = diretório de montagem da máquina cliente;
+/cliente/pastacomp = diretório de montagem da máquina cliente; <br>
 nfs = comando para utilizar o sistema de arquivos nfs; 
 defaults = opção padrão de configuração;
 noatime = melhora o desempenho não escrevendo no disco;
