@@ -60,13 +60,42 @@ De forma inicial, para configurar o servidor FTP e utilizar do compartilhamento 
 
 ### Passo a passo: 
 ### Na máquina servidor:  
-### sudo apt update (Para atualização dos repositórios)
-### sudo apt upgrade (Para atualizar os pacotes já instalados no sistema operacional)
-### sudo apt install vsftpd -y (Para a instalação do VSFTPD)
+#### 1 - sudo apt update (Para atualização dos repositórios)
+#### 2 - sudo apt upgrade (Para atualizar os pacotes já instalados no sistema operacional)
+#### 3 - sudo apt install vsftpd -y (Para a instalação do VSFTPD)
 
-Após a instalação, foi verificado se o serviço estava em execução corretamente, utilizando o comando **sudo systemctl status vsftpd**. O resultado esperado para funcionamento adequado é: **Active: running.**
-Em caso de erro como "**Unit vsftpd.service not found"**, é necessário reinstalar o VSFTPD utilizando o comando: **sudo apt reinstall vsftpd -y.** Caso ocorra o erro "**500 OOPS: refusing to run with writable root inside chroot()"**, que impede o login via FTP, deve-se acessar o arquivo de configuração com: **sudo nano /etc/vsftpd.conf.** Em seguida, com CTRL + W, localizar as configurações e inserir a diretiva: **allow_writeable_chroot=YES.** Também é necessário garantir que a linha **chroot_local_user** esteja como YES. Ao confirmar ambos, salvar com CTRL + O, pressionar ENTER e sair com CTRL + X. Para o erro "**500 OOPS: run two copies of vsftpd for IPv4 and IPv6"**, deve-se retornar ao arquivo de configuração **sudo nano /etc/vsftpd.conf** e ajustar as diretivas para:
-**: **listen=YES** e **listen_ipv6=NO.** Após salvar, o serviço deve ser reiniciado com: **sudo systemctl restart vsftpd.** Listando o IP do servidor com o comando ip a, foi identificado o endereço: 172.16.0.132. Concluída a parte do servidor, procede-se para a máquina cliente, onde é feito o acesso utilizando o comando: **ftp 172.16.0.132** — que corresponde ao IP do servidor previamente configurado. Após inserir o nome de usuário e senha definidos no servidor, o acesso é estabelecido. Para listar e verificar os arquivos disponíveis, utiliza-se o comando: **ls.**
+Após a instalação, foi verificado se o serviço estava em execução corretamente, utilizando o comando 
+#### 4 - sudo systemctl status vsftpd. O resultado esperado para funcionamento adequado é: **Active: running.**
+
+Em caso de erro como **Unit vsftpd.service not found**, é necessário reinstalar o VSFTPD utilizando o comando: 
+#### 5 - sudo apt reinstall vsftpd -y. 
+
+Caso ocorra o erro **500 OOPS: refusing to run with writable root inside chroot()**, que impede o login via FTP, deve-se acessar o arquivo de configuração com: 
+#### 6 - sudo nano /etc/vsftpd.conf.
+
+Em seguida, com CTRL + W, localizar as configurações e inserir a diretiva: 
+#### 7 - allow_writeable_chroot=YES. 
+
+Também é necessário garantir que a linha **chroot_local_user** esteja como **YES**. Ao confirmar ambos, salvar com CTRL + O, pressionar ENTER e sair com CTRL + X. 
+Para o erro "**500 OOPS: run two copies of vsftpd for IPv4 and IPv6"**, deve-se retornar ao arquivo de configuração 
+#### 8 - sudo nano /etc/vsftpd.conf 
+e ajustar as diretivas para:
+#### 9 - listen=YES e listen_ipv6=NO. 
+
+Após salvar, o serviço deve ser reiniciado com: 
+#### 10 - sudo systemctl restart vsftpd. 
+
+Listando o IP do servidor com o comando
+#### 11 - ip a 
+foi identificado o endereço: 172.16.0.125. 
+
+### Na máquina cliente
+É feito o acesso utilizando o comando: 
+### ftp 172.16.0.125 
+que corresponde ao IP do servidor previamente configurado. 
+Após inserir o nome de usuário e senha definidos no servidor, o acesso é estabelecido. 
+Para listar e verificar os arquivos disponíveis, utiliza-se o comando: 
+#### ls
 
 # NFS
 Para configurar o servidor NFS, foi necessário instalar o pacote nfs-kernel-server na máquina Servidor, configurando-o corretamente e aplicando as configurações. Na máquina cliente, é necessário baixar o pacote nfs-common para utilizar o serviço do NFS e após, montar o diretério compartilhado em um diretório local. 
