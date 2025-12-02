@@ -111,7 +111,7 @@ Para configurar o servidor NFS, foi necessário instalar o pacote nfs-kernel-ser
 /servidor/pastacomp = diretório a ser compartilhado; <br> 
 172.16.0.0/24: ficará disponível para toda a rede local; <br>
 rw: permissão de leitura e escrita; <br>
-sync: escrita síncron; <br> 
+sync: escrita síncrona; <br> 
 no_root_squash: libera privilégios para o root. 
 #### 5 - sudo exportfs -ra (Comando para aplicar as configurações estabelecidas no arquivo /etc/exports)
 #### 6 - sudo exportfs -v (Comando para verificar se o diretório realmente foi compartilhado)
