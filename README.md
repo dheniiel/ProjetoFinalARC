@@ -91,11 +91,11 @@ foi identificado o endereço: 172.16.0.125.
 
 ### Na máquina cliente
 É feito o acesso utilizando o comando: 
-### ftp 172.16.0.125 
+#### 1 - ftp 172.16.0.125 
 que corresponde ao IP do servidor previamente configurado. 
 Após inserir o nome de usuário e senha definidos no servidor, o acesso é estabelecido. 
 Para listar e verificar os arquivos disponíveis, utiliza-se o comando: 
-#### ls
+#### 2 - ls
 
 # NFS
 Para configurar o servidor NFS, foi necessário instalar o pacote nfs-kernel-server na máquina Servidor, configurando-o corretamente e aplicando as configurações. Na máquina cliente, é necessário baixar o pacote nfs-common para utilizar o serviço do NFS e após, montar o diretério compartilhado em um diretório local. 
